@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Login CFM / VIDaaS</title>
+<style>
+  :root{color-scheme:light dark}
+  body{font-family:-apple-system,BlinkMacSystemFont,system-ui,sans-serif;text-align:center;
+       padding:48px 22px;max-width:480px;margin:0 auto;background:#f5f5f7;color:#1c1c1e}
+  @media(prefers-color-scheme:dark){body{background:#000;color:#fff}}
+  h1{font-size:24px;margin:.2em 0}
+  p{color:#666;font-size:16px;line-height:1.5}
+  @media(prefers-color-scheme:dark){p{color:#aaa}}
+  .btn{display:block;margin:28px auto 0;padding:20px;font-size:21px;font-weight:700;
+       background:#0a84ff;color:#fff;border-radius:16px;text-decoration:none}
+  .btn:active{opacity:.7}
+  .hint{margin-top:34px;font-size:13px;color:#999}
+  code{word-break:break-all;font-size:11px;color:#999}
+</style>
+</head>
+<body>
+  <h1>🔐 Login CFM</h1>
+  <p>Toque no botão para abrir o app <b>VIDaaS</b> e aprovar o login.</p>
+  <a id="go" class="btn" href="#">Abrir VIDaaS e aprovar</a>
+  <p class="hint" id="hint">Abrindo o VIDaaS… se nada acontecer, toque no botão acima.<br>
+     (Requer o app VIDaaS instalado. O link vale ~5 min.)</p>
+  <script>
+    (function () {
+      var d = new URLSearchParams(location.search).get('d') || '';
+      if (!d) { document.getElementById('hint').textContent = 'Link inválido (sem destino).'; return; }
+      var a = document.getElementById('go');
+      a.href = d;                 // botão = link real pro deeplink (toque garante o gesto no iOS)
+      a.addEventListener('click', function () { setTimeout(function(){}, 0); });
+      // tentativa automática de abrir (pode ser bloqueada sem gesto; o botão cobre)
+      try { window.location.href = d; } catch (e) {}
+    })();
+  </script>
+</body>
+</html>
